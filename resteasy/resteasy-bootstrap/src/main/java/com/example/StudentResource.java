@@ -46,19 +46,10 @@ public class StudentResource {
     }
 
 
-    @PUT
+    @POST //или PUT
     @Path("/set")
     public void putPeople(@QueryParam("fname") String fname, @QueryParam("sname") String sname){
-        //int s = MPeople.size();
         try {
-//            System.out.print("asdfghjzxcvbnwertyuizesdxfgvhbjndxgfchgvjhk");
-//            BufferedWriter bw = new BufferedWriter(new FileWriter("people.txt"));
-//            bw.write(name);
-//            bw.close();
-//            Formatter x= new Formatter(new BufferedWriter(new FileWriter("people.txt")));
-//            x.format("\n"+name);
-//            x.flush();
-//            x.close();
             PrintStream printStream = new PrintStream(new FileOutputStream("people.txt", true), true);
             printStream.println(sname+" "+fname);
             printStream.close();

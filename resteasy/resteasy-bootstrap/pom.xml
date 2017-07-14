@@ -7,7 +7,7 @@
     <packaging>jar</packaging>
 
     <name>resteasy-bootstrap</name>
-    <url>http://github.com/axhixh/resteasy-bootstrap</url>
+    <url>https://github.com/PavelHodyakov/Messager</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.8</jdk.version>
@@ -28,6 +28,33 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-undertow</artifactId>
             <version>3.0.10.Final</version>
+        </dependency>
+
+        <dependency>
+<groupId>org.json</groupId>
+<artifactId>org.json</artifactId>
+            <version>chargebee-1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
         </dependency>
     </dependencies>
     <build>
@@ -53,7 +80,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.example.App</mainClass>
+                            <mainClass>com.StorageMessages.AppMessage</mainClass>
                         </manifest>
                     </archive>
 

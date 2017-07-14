@@ -29,5 +29,9 @@
     <orderEntry type="library" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-client:3.0.10.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:async-http-servlet-3.0:3.0.10.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.json:org.json:chargebee-1.0" level="project" />
+    <orderEntry type="library" name="Maven: javax:javaee-web-api:7.0" level="project" />
+    <orderEntry type="library" name="Maven: javax:javaee-api:7.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.5.0" level="project" />
   </component>
 </module>
