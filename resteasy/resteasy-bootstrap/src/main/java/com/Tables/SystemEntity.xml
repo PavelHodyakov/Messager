@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.Tables.SystemEntity">
+        <table name="System" schema="StorageMessage" catalog=""/>
+        <attributes>
+            <id name="idSystem">
+                <column name="idSystem" precision="11"/>
+            </id>
+            <basic name="name">
+                <column name="Name" length="45"/>
+            </basic>
+            <basic name="password">
+                <column name="Password" length="45"/>
+            </basic>
+            <one-to-many name="baseMessagesByIdSystem" mapped-by="systemByRecepientId"
+                         target-entity="com.Tables.BaseMessageEntity"/>
+            <one-to-many name="baseMessagesByIdSystem_0" mapped-by="systemBySenderId"
+                         target-entity="com.Tables.BaseMessageEntity"/>
+            <one-to-many name="subscriptionsByIdSystem" mapped-by="systemBySystemId"
+                         target-entity="com.Tables.SubscriptionEntity"/>
+        </attributes>
+    </entity>
+</entity-mappings>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.Tables.MessageEntity">
+        <table name="Message" schema="StorageMessage" catalog=""/>
+        <attributes>
+            <id name="idMessage">
+                <column name="IdMessage" precision="11"/>
+            </id>
+            <basic name="caption">
+                <column name="Caption" nullable="false"/>
+            </basic>
+            <basic name="content">
+                <column name="Content"/>
+            </basic>
+            <basic name="delRequire">
+                <column name="Del_Require" precision="1"/>
+            </basic>
+            <basic name="readRequire">
+                <column name="Read_require" precision="1"/>
+            </basic>
+            <one-to-many name="baseMessagesByIdMessage" mapped-by="messageByMessageId"
+                         target-entity="com.Tables.BaseMessageEntity"/>
+        </attributes>
+    </entity>
+</entity-mappings>

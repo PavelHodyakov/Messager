@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.Tables.BaseMessageEntity">
+        <table name="BaseMessage" schema="StorageMessage" catalog=""/>
+        <attributes>
+            <id name="idBaseMessage">
+                <column name="idBaseMessage" precision="11"/>
+            </id>
+            <basic name="recepientId">
+                <column name="Recepient_Id" nullable="false" precision="11"/>
+            </basic>
+            <basic name="senderId">
+                <column name="Sender_Id" nullable="false" precision="11"/>
+            </basic>
+            <basic name="messageId">
+                <column name="Message_Id" precision="11"/>
+            </basic>
+            <basic name="delivery">
+                <column name="Delivery" precision="1"/>
+            </basic>
+            <basic name="read">
+                <column name="Read" precision="1"/>
+            </basic>
+            <many-to-one name="systemByRecepientId" optional="true" target-entity="com.Tables.SystemEntity">
+                <join-column name="Recepient_Id" nullable="false" referenced-column-name="idSystem"/>
+            </many-to-one>
+            <many-to-one name="systemBySenderId" optional="true" target-entity="com.Tables.SystemEntity">
+                <join-column name="Sender_Id" nullable="false" referenced-column-name="idSystem"/>
+            </many-to-one>
+            <many-to-one name="messageByMessageId" optional="true" target-entity="com.Tables.MessageEntity">
+                <join-column name="Message_Id" referenced-column-name="IdMessage"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="com.Tables.SubscriptionEntity">
+        <table name="Subscription" schema="StorageMessage" catalog=""/>
+        <attributes>
+            <id name="idSubscription">
+                <column name="idSubscription" precision="11"/>
+            </id>
+            <basic name="systemId">
+                <column name="System_id" nullable="false" precision="11"/>
+            </basic>
+            <basic name="address">
+                <column name="Address" length="100"/>
+            </basic>
+            <many-to-one name="systemBySystemId" optional="true" target-entity="com.Tables.SystemEntity">
+                <join-column name="System_id" nullable="false" referenced-column-name="idSystem"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>
