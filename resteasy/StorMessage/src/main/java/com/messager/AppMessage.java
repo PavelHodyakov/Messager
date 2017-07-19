@@ -1,12 +1,10 @@
-package com.StorageMessages;
+package com.messager;
 
-import com.example.*;
 import io.undertow.Undertow;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-import java.lang.*;
 import java.util.HashSet;
 import java.util.Set;
 

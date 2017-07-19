@@ -6,35 +6,35 @@ import javax.persistence.*;
  * Created by pavel on 17.07.17.
  */
 @Entity
-@Table(name = "Subscription", schema = "StorageMessage", catalog = "")
+@Table(name = "Subscription", schema = "public", catalog = "Messager")
 public class SubscriptionEntity {
-    private int idSubscription;
-    private Integer systemId;
+    private int idSubscribe;
+    private int systemId;
     private String address;
     private SystemEntity systemBySystemId;
 
     @Id
-    @Column(name = "idSubscription", nullable = false)
-    public int getIdSubscription() {
-        return idSubscription;
+    @Column(name = "Id_subscribe")
+    public int getIdSubscribe() {
+        return idSubscribe;
     }
 
-    public void setIdSubscription(int idSubscription) {
-        this.idSubscription = idSubscription;
+    public void setIdSubscribe(int idSubscribe) {
+        this.idSubscribe = idSubscribe;
     }
 
     @Basic
-    @Column(name = "System_id", nullable = true)
-    public Integer getSystemId() {
+    @Column(name = "system_id")
+    public int getSystemId() {
         return systemId;
     }
 
-    public void setSystemId(Integer systemId) {
+    public void setSystemId(int systemId) {
         this.systemId = systemId;
     }
 
     @Basic
-    @Column(name = "Address", nullable = false, length = 100)
+    @Column(name = "Address")
     public String getAddress() {
         return address;
     }
@@ -50,8 +50,8 @@ public class SubscriptionEntity {
 
         SubscriptionEntity that = (SubscriptionEntity) o;
 
-        if (idSubscription != that.idSubscription) return false;
-        if (systemId != null ? !systemId.equals(that.systemId) : that.systemId != null) return false;
+        if (idSubscribe != that.idSubscribe) return false;
+        if (systemId != that.systemId) return false;
         if (address != null ? !address.equals(that.address) : that.address != null) return false;
 
         return true;
@@ -59,14 +59,14 @@ public class SubscriptionEntity {
 
     @Override
     public int hashCode() {
-        int result = idSubscription;
-        result = 31 * result + (systemId != null ? systemId.hashCode() : 0);
+        int result = idSubscribe;
+        result = 31 * result + systemId;
         result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
 
     @ManyToOne
-    @JoinColumn(name = "System_id", referencedColumnName = "idSystem")
+    @JoinColumn(name = "system_id", referencedColumnName = "Id_system", nullable = false)
     public SystemEntity getSystemBySystemId() {
         return systemBySystemId;
     }

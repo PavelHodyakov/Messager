@@ -6,76 +6,76 @@ import javax.persistence.*;
  * Created by pavel on 17.07.17.
  */
 @Entity
-@Table(name = "BaseMessage", schema = "StorageMessage", catalog = "")
+@Table(name = "BaseMessage", schema = "public", catalog = "Messager")
 public class BaseMessageEntity {
-    private int idBaseMessage;
-    private Integer recepientId;
-    private Integer senderId;
-    private int messageId;
-    private byte delivery;
-    private byte read;
-    private SystemEntity systemByRecepientId;
+    private long idBase;
+    private long recipientId;
+    private long senderId;
+    private long messageId;
+    private boolean delivery;
+    private boolean reading;
+    private SystemEntity systemByRecipientId;
     private SystemEntity systemBySenderId;
-    private MessageEntity messageByMessageId;
+    private MessagesEntity messagesByMessageId;
 
     @Id
-    @Column(name = "idBaseMessage", nullable = false)
-    public int getIdBaseMessage() {
-        return idBaseMessage;
+    @Column(name = "id_base")
+    public long getIdBase() {
+        return idBase;
     }
 
-    public void setIdBaseMessage(int idBaseMessage) {
-        this.idBaseMessage = idBaseMessage;
-    }
-
-    @Basic
-    @Column(name = "Recepient_Id", nullable = true)
-    public Integer getRecepientId() {
-        return recepientId;
-    }
-
-    public void setRecepientId(Integer recepientId) {
-        this.recepientId = recepientId;
+    public void setIdBase(long idBase) {
+        this.idBase = idBase;
     }
 
     @Basic
-    @Column(name = "Sender_Id", nullable = true)
-    public Integer getSenderId() {
+    @Column(name = "recipient_id")
+    public long getRecipientId() {
+        return recipientId;
+    }
+
+    public void setRecipientId(long recipientId) {
+        this.recipientId = recipientId;
+    }
+
+    @Basic
+    @Column(name = "sender_id")
+    public long getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(Integer senderId) {
+    public void setSenderId(long senderId) {
         this.senderId = senderId;
     }
 
     @Basic
-    @Column(name = "Message_Id", nullable = false)
-    public int getMessageId() {
+    @Column(name = "message_id")
+    public long getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(int messageId) {
+    public void setMessageId(long messageId) {
         this.messageId = messageId;
     }
 
     @Basic
-    @Column(name = "Delivery", nullable = false)
-    public byte getDelivery() {
+    @Column(name = "delivery")
+    public boolean isDelivery() {
         return delivery;
     }
 
-    public void setDelivery(byte delivery) {
+    public void setDelivery(boolean delivery) {
         this.delivery = delivery;
     }
 
     @Basic
-    @Column(name = "Read", nullable = false)
-    public byte getRead() {
-        return read;
+    @Column(name = "reading")
+    public boolean isReading() {
+        return reading;
     }
 
-    public void setRead(byte read) {
-        this.read = read;
+    public void setReading(boolean reading) {
+        this.reading = reading;
     }
 
     @Override
@@ -85,39 +85,39 @@ public class BaseMessageEntity {
 
         BaseMessageEntity that = (BaseMessageEntity) o;
 
-        if (idBaseMessage != that.idBaseMessage) return false;
+        if (idBase != that.idBase) return false;
+        if (recipientId != that.recipientId) return false;
+        if (senderId != that.senderId) return false;
         if (messageId != that.messageId) return false;
         if (delivery != that.delivery) return false;
-        if (read != that.read) return false;
-        if (recepientId != null ? !recepientId.equals(that.recepientId) : that.recepientId != null) return false;
-        if (senderId != null ? !senderId.equals(that.senderId) : that.senderId != null) return false;
+        if (reading != that.reading) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idBaseMessage;
-        result = 31 * result + (recepientId != null ? recepientId.hashCode() : 0);
-        result = 31 * result + (senderId != null ? senderId.hashCode() : 0);
-        result = 31 * result + messageId;
-        result = 31 * result + (int) delivery;
-        result = 31 * result + (int) read;
+        int result = (int) (idBase ^ (idBase >>> 32));
+        result = 31 * result + (int) (recipientId ^ (recipientId >>> 32));
+        result = 31 * result + (int) (senderId ^ (senderId >>> 32));
+        result = 31 * result + (int) (messageId ^ (messageId >>> 32));
+        result = 31 * result + (delivery ? 1 : 0);
+        result = 31 * result + (reading ? 1 : 0);
         return result;
     }
 
     @ManyToOne
-    @JoinColumn(name = "Recepient_Id", referencedColumnName = "idSystem")
-    public SystemEntity getSystemByRecepientId() {
-        return systemByRecepientId;
+    @JoinColumn(name = "recipient_id", referencedColumnName = "Id_system", nullable = false)
+    public SystemEntity getSystemByRecipientId() {
+        return systemByRecipientId;
     }
 
-    public void setSystemByRecepientId(SystemEntity systemByRecepientId) {
-        this.systemByRecepientId = systemByRecepientId;
+    public void setSystemByRecipientId(SystemEntity systemByRecipientId) {
+        this.systemByRecipientId = systemByRecipientId;
     }
 
     @ManyToOne
-    @JoinColumn(name = "Sender_Id", referencedColumnName = "idSystem")
+    @JoinColumn(name = "sender_id", referencedColumnName = "Id_system", nullable = false)
     public SystemEntity getSystemBySenderId() {
         return systemBySenderId;
     }
@@ -127,12 +127,12 @@ public class BaseMessageEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "Message_Id", referencedColumnName = "IdMessage", nullable = false)
-    public MessageEntity getMessageByMessageId() {
-        return messageByMessageId;
+    @JoinColumn(name = "message_id", referencedColumnName = "id_message", nullable = false)
+    public MessagesEntity getMessagesByMessageId() {
+        return messagesByMessageId;
     }
 
-    public void setMessageByMessageId(MessageEntity messageByMessageId) {
-        this.messageByMessageId = messageByMessageId;
+    public void setMessagesByMessageId(MessagesEntity messagesByMessageId) {
+        this.messagesByMessageId = messagesByMessageId;
     }
 }

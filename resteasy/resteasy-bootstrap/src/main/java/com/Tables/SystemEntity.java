@@ -7,7 +7,7 @@ import java.util.Collection;
  * Created by pavel on 17.07.17.
  */
 @Entity
-@Table(name = "System", schema = "StorageMessage", catalog = "")
+@Table(name = "System", schema = "public", catalog = "Messager")
 public class SystemEntity {
     private int idSystem;
     private String name;
@@ -16,8 +16,17 @@ public class SystemEntity {
     private Collection<BaseMessageEntity> baseMessagesByIdSystem_0;
     private Collection<SubscriptionEntity> subscriptionsByIdSystem;
 
+    public SystemEntity(){
+
+    }
+
+    public SystemEntity(String name, String password){
+        this.name=name;
+        this.password=password;
+    }
+
     @Id
-    @Column(name = "idSystem", nullable = false)
+    @Column(name = "Id_system")
     public int getIdSystem() {
         return idSystem;
     }
@@ -27,7 +36,7 @@ public class SystemEntity {
     }
 
     @Basic
-    @Column(name = "Name", nullable = false, length = 45)
+    @Column(name = "Name")
     public String getName() {
         return name;
     }
@@ -37,7 +46,7 @@ public class SystemEntity {
     }
 
     @Basic
-    @Column(name = "Password", nullable = false, length = 45)
+    @Column(name = "Password")
     public String getPassword() {
         return password;
     }
@@ -68,7 +77,7 @@ public class SystemEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "systemByRecepientId")
+    @OneToMany(mappedBy = "systemByRecipientId")
     public Collection<BaseMessageEntity> getBaseMessagesByIdSystem() {
         return baseMessagesByIdSystem;
     }

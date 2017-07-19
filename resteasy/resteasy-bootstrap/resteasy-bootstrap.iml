@@ -6,9 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="Entities" />
-          <factory-entry name="NewPersistenceUnit" value="a7308045-b0bd-42ce-8b3c-c8c7e5b5e330" />
-          <factory-entry name="persistenceUnit" value="971232c6-0980-45d5-9eb0-a9ed84de7fe1" />
+          <factory-entry name="persistenceUnit" value="939df5fa-387c-4cab-a659-2367896d6e62" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/java/META-INF/persistence.xml" />
       </configuration>
@@ -32,12 +30,6 @@
     <orderEntry type="library" name="Maven: io.undertow:undertow-servlet:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec:1.0.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: com.mysql:management:5-0-2-beta" level="project" />
-    <orderEntry type="library" name="Maven: junit:junit:3.8.1" level="project" />
-    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:3.1.12" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.jdmk:jmxtools:1.2" level="project" />
-    <orderEntry type="library" name="Maven: aspectj:aspectjrt:1.2" level="project" />
-    <orderEntry type="library" name="Maven: aspectj:aspectjtools:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-undertow:3.0.10.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jaxrs:3.0.10.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:jaxrs-api:3.0.10.Final" level="project" />
@@ -53,6 +45,18 @@
     <orderEntry type="library" name="Maven: org.jboss.resteasy:async-http-servlet-3.0:3.0.10.Final" level="project" />
     <orderEntry type="library" name="Maven: org.json:org.json:chargebee-1.0" level="project" />
     <orderEntry type="library" name="Maven: javax:javaee-web-api:7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-entitymanager:5.2.10.Final" level="project" />
+    <orderEntry type="library" name="Maven: dom4j:dom4j:1.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.common:hibernate-commons-annotations:5.0.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.20.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.6.6" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:1.0.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.2.10.Final" level="project" />
+    <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss:jandex:2.0.3.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final" level="project" />
     <orderEntry type="library" name="Maven: javax:javaee-api:7.0" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.5.0" level="project" />
   </component>

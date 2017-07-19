@@ -1,7 +1,9 @@
 package com.StorageMessages;
 
+import com.Tables.HibernateSessionFactory;
 import jdk.nashorn.internal.objects.Global;
 import jdk.nashorn.internal.parser.JSONParser;
+import org.hibernate.Session;
 import org.json.*;
 
 //import javax.json.stream.JsonParser;
@@ -31,44 +33,48 @@ public class StoreImpl implements Store {
         //здесь писать пока что ничего, т.к. данные пусть хранятся в List в AppMessages
 
         try {
-            Random random = new Random();
+            /*Random random = new Random();
             String filename = String.valueOf(random.nextInt())+".txt";
-            BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filename));*/
 
         JSONObject obj = new JSONObject(mes);
 
         String caption = obj.getString("caption");
         String messagestr = obj.getString("message");
         JSONArray users = obj.getJSONArray("users");
-        bw.write(caption);
-        bw.newLine();
-            bw.flush();
-        bw.write(messagestr);
-            bw.newLine();
-            bw.flush();
+            Session session = HibernateSessionFactory.getSessionFactory().openSession();
+            session.beginTransaction();
+//        bw.write(caption);
+//        bw.newLine();
+//            bw.flush();
+//        bw.write(messagestr);
+//            bw.newLine();
+//            bw.flush();
         List<SystemImpl> user = new ArrayList<>();
         for (int i=0;i<users.length();i++) {
 
             user.add(new SystemImpl(users.getString(i)));//users.getString(i));
-            bw.write(users.getString(i));
-            bw.newLine();
-            bw.flush();
+//            bw.write(users.getString(i));
+//            bw.newLine();
+//            bw.flush();
         }
         SystemImpl owner = new SystemImpl(obj.getString("owner"));
-        bw.write(obj.getString("owner"));
-            bw.newLine();
-            bw.flush();
+//        bw.write(obj.getString("owner"));
+//            bw.newLine();
+//            bw.flush();
         OptionsImpl option = new OptionsImpl(obj.getBoolean("delivery"), obj.getBoolean("reading"));
-        MessageImpl message = new MessageImpl(caption,messagestr,user,owner,option);
+        //MessageImpl message = new MessageImpl(caption,messagestr,user,owner,option);
 
-        int n = ListMes.size();
-        message.setId(n);
-        ListMes.add(message);
-    bw.write(String.valueOf(n));
-            bw.newLine();
-            bw.flush();
-    bw.close();
+//        int n = ListMes.size();
+       // message.setId(n);
+        //ListMes.add(message);
+//    bw.write(String.valueOf(n));
+//            bw.newLine();
+//            bw.flush();
+//    bw.close();
 
+        session.getTransaction().commit();
+        session.close();
 
     }catch (Exception e){
         System.out.println(e);
