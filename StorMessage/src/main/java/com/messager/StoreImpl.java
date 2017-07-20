@@ -12,7 +12,10 @@ import javax.persistence.Persistence;
 import javax.ws.rs.*;
 import java.lang.System;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.messager.Enter;
 
 //import javax.json.stream.JsonParser;
@@ -25,6 +28,8 @@ import com.messager.Enter;
 public class StoreImpl implements Store {
     List<MessageImpl> ListMes = new ArrayList<>();
     public EntityManager em= Persistence.createEntityManagerFactory("Entities").createEntityManager();
+
+
 
     @Override
     @POST
@@ -71,10 +76,10 @@ public class StoreImpl implements Store {
                 Integer se=GetID(owner);
                 Integer re=GetID(users.getString(i));
                 em.persist(new BasemessageEntity(id,myid,re,se,false,false));
-                em.flush();
+
             }
         }
-
+            em.flush();
             em.getTransaction().commit();
     }catch (Exception e){
         System.out.println(e);
@@ -91,22 +96,64 @@ public class StoreImpl implements Store {
 
     @Override
     @GET
-    @Path("/getmeslogin/{login}")
-    public List<MessageImpl> GetMessageForSystem(@PathParam("login") String login) {
-        // на этапе когда данные хрантся не в БД, а в List, необходимо передавать этот лист в этот
-        //метод, что бы получить данные, при использовании БД lm не нужен
-        List<MessageImpl> message = new ArrayList<>();
-        for(int i=0;i<ListMes.size();i++){
-            MessageImpl m=ListMes.get(i);
-            List<SystemImpl> f = m.getAddressees();
-            for(int j=0;j<f.size();j++){
-                if(f.get(j).getLogin().equals(login)){
-                    message.add(m);
-                }
-                break;
-            }
+    @Path("/getmesid")
+    public String GetMessageById(@QueryParam("id") String id){
+        JSONObject obj=new JSONObject();
+        int g=Integer.parseInt(id);
+        try {
+            List<String> mes = em.createQuery("select content from MessagesEntity where(idMessage=:id)").setParameter("id", g).getResultList();
+            obj.put("content", mes.get(0));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
-        return message;
+        return obj.toString();
+    }
+
+
+    @Override
+    @GET
+    @Path("/getmeslogin")
+    public String GetMessageForSystem(@QueryParam("login") String login) {
+        em.getTransaction().begin();
+        List<Integer> ownerid = em.createQuery("select idSystem from SystemEntity where(name=:login)").setParameter("login",login).getResultList();
+        int recipientid = ownerid.get(0);
+        List<Integer> idMesList=em.createQuery("select messageId from BasemessageEntity where (recipientId=:recipientid)").setParameter("recipientid",recipientid).getResultList();
+        List<String> captionMes= new ArrayList<>();
+        List<Integer> getterId = em.createQuery("select senderId from BasemessageEntity where (recipientId=:recipientid)").setParameter("recipientid",recipientid).getResultList();
+        List<String> namesender = new ArrayList<>();
+        for(int i=0;i<idMesList.size();i++) {
+            int idmes = idMesList.get(i);
+            int idsend = getterId.get(i);
+            List<String> r =em.createQuery("select caption from MessagesEntity where(idMessage=:idmes)").setParameter("idmes",idmes).getResultList();
+            captionMes.add(r.get(0));//(em.createQuery("select caption from MessagesEntity where(idMessage=:idmes)").setParameter("idmes",idmes));
+            //List<MessagesEntity> t = em.find(MessagesEntity.class,idmes);
+            List<String> na =em.createQuery("select name from SystemEntity where(idSystem=:idsend)").setParameter("idsend",idsend).getResultList();
+            namesender.add(na.get(0));//(em.createQuery("select name from SystemEntity where(idSystem=:idsend)").setParameter("idsend",idsend).toString());
+        }
+        String outputstring = makeJson(idMesList,captionMes,namesender);
+        return outputstring;
+    }
+
+    private String makeJson(List<Integer> idMes, List<String> captionMes, List<String> namesender){
+        JSONObject json = new JSONObject();
+        JSONArray idmessage = new JSONArray();
+        JSONArray captionmessage = new JSONArray();
+        JSONArray namesend = new JSONArray();
+        int size = idMes.size();
+        try {
+            for (int i = 0; i < size; i++) {
+                idmessage.put(idMes.get(i));
+                captionmessage.put(captionMes.get(i));
+                namesend.put(namesender.get(i));
+            }
+            json.put("idmessage", idmessage);
+            json.put("caption",captionmessage);
+            json.put("namesender",namesend);
+        }catch(Exception e){
+            System.out.println("Что-то с JSON          "+e.getMessage());
+        }
+        System.out.println(json.toString());
+        return json.toString();
     }
 
     @Override

@@ -14,7 +14,7 @@ public class SystemEntity {
     private int idSystem;
     private Collection<BasemessageEntity> basemessagesByIdSystem;
     private Collection<BasemessageEntity> basemessagesByIdSystem_0;
-    private Collection<SubscriptionEntity> subscriptionsByIdSystem;
+    private SubscriptionEntity subscriptionsByIdSystem;
 
     public SystemEntity(String name, String password, int idSystem) {
         this.name = name;
@@ -95,12 +95,12 @@ public class SystemEntity {
         this.basemessagesByIdSystem_0 = basemessagesByIdSystem_0;
     }
 
-    @OneToMany(mappedBy = "systemBySystemId")
-    public Collection<SubscriptionEntity> getSubscriptionsByIdSystem() {
+    @OneToOne(mappedBy = "systemBySystemId")
+    public SubscriptionEntity getSubscriptionsByIdSystem() {
         return subscriptionsByIdSystem;
     }
 
-    public void setSubscriptionsByIdSystem(Collection<SubscriptionEntity> subscriptionsByIdSystem) {
+    public void setSubscriptionsByIdSystem(SubscriptionEntity subscriptionsByIdSystem) {
         this.subscriptionsByIdSystem = subscriptionsByIdSystem;
     }
 }

@@ -2,13 +2,17 @@ package com.messager;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by pavel on 13.07.17.
  */
 
 public interface Store {
+
+    public String GetMessageById(String id);
 
     /**
      * Метод добавляет сообщения
@@ -23,7 +27,7 @@ public interface Store {
      * @param Login - логин пользователя - получателя сообщения
      * @return - список непрочитанных сообщений для пользователя
      */
-    List<MessageImpl> GetMessageForSystem(String Login);
+    String GetMessageForSystem(String Login);
 
     /**
      * Метод для получения всех непрочитанных сообщений

@@ -9,14 +9,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import org.json.*;
 import java.lang.System;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by pavel on 14.07.17.
  */
 public class Systems {
 
+
+
     public static void main(String[] args) {
+        Map<Integer,Map<Integer,List<String>>> mesinfo = new HashMap<>();
         boolean enter=false;
         boolean action=false;
         int answer=0;
@@ -46,11 +49,19 @@ public class Systems {
             }
             while(!action){
                 System.out.println("1. Отправить письмо");
+                System.out.println("2. Получить сообщения");
+                //System.out.println("3. Посмотреть сообщения");
                 System.out.println("0. Выход");
                 answer=sc.nextInt();
                 switch(answer){
                     case 0: return;
                     case 1: method.AddMessage(login); break;
+                    case 2: {
+                        mesinfo=method.getMessage(login);
+                        //Map<Integer,List<String>> message = new HashMap<>();
+                        //List<String> info = new ArrayList<>();
+                        method.showMessages(mesinfo);
+                    break;}
                 }
             }
         }catch(Exception e){

@@ -65,7 +65,7 @@ public class SubscriptionEntity {
         return result;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "system_id", referencedColumnName = "id_system", nullable = false, insertable = false, updatable = false)
     public SystemEntity getSystemBySystemId() {
         return systemBySystemId;

@@ -8,11 +8,110 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.*;
 
 /**
  * Created by pavel on 18.07.17.
  */
 public class Methods {
+
+    public void showMessages(Map<Integer,Map<Integer,List<String>>> mesinfo){
+        while(true) {
+            for (Map.Entry<Integer, Map<Integer, List<String>>> entry : mesinfo.entrySet()) {
+                Map<Integer, List<String>> message = entry.getValue();
+                for (Map.Entry<Integer, List<String>> entry1 : message.entrySet()) {
+                    List<String> info = entry1.getValue();
+                    System.out.println(entry.getKey() + 1 + ")" + " Sender: " + info.get(1) + " Caption: " + info.get(0));
+                }
+                //System.out.println(entry.getKey() + "/" + entry.getValue());
+            }
+
+            System.out.println("Выберите номер сообщения для просмотра, для выхода нажмите \"0\"");
+            Scanner sc = new Scanner(System.in);
+            int answer = sc.nextInt();
+            if (answer <= 0 || answer > mesinfo.size()) return;
+            Map<Integer, List<String>> me = mesinfo.get(answer-1);
+            int idMes=0;
+            for (Map.Entry<Integer, List<String>> en : me.entrySet()) {
+                idMes = en.getKey();
+            }
+            GetMessageById(idMes);
+        }
+    }
+
+    public void GetMessageById(int id){
+        String line = "";
+        try{
+            URL url = new URL("http://localhost:8080/base/store/getmesid?id="+String.valueOf(id));
+            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+            httpCon.setDoOutput(true);
+            httpCon.setRequestMethod("GET");
+            BufferedReader rd= new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
+            line=rd.readLine();
+            //System.out.println(line);
+            rd.close();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            System.out.println(line);
+            parseJsonbyID(line);
+        }
+    }
+
+    private void parseJsonbyID(String line){
+        try {
+            JSONObject json = new JSONObject(line);
+            System.out.println("Content: \n" + json.getString("content"));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+
+
+    public Map<Integer,Map<Integer,List<String>>> getMessage(String myname){
+        String line="";
+        try{
+            URL url = new URL("http://localhost:8080/base/store/getmeslogin?login="+myname);
+            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+            httpCon.setDoOutput(true);
+            httpCon.setRequestMethod("GET");
+            BufferedReader rd= new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
+            line=rd.readLine();
+            //System.out.println(line);
+            rd.close();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            System.out.println(line);
+            return parseJson(line);
+        }
+    }
+
+    private Map<Integer,Map<Integer,List<String>>> parseJson(String info){
+        Map<Integer,Map<Integer,List<String>>> allinfo = new HashMap<>();
+        try {
+            JSONObject json = new JSONObject(info);
+            JSONArray idM = json.getJSONArray("idmessage");
+            JSONArray cap = json.getJSONArray("caption");
+            JSONArray nameS = json.getJSONArray("namesender");
+            for(int i=0;i<cap.length();i++){
+                List<String> capSys =new ArrayList<>();
+                Map<Integer,List<String>> mesinfo = new HashMap<>();
+                capSys.add(cap.getString(i));
+                capSys.add(nameS.getString(i));
+                mesinfo.put(idM.getInt(i),capSys);
+                allinfo.put(i,mesinfo);
+            }
+        }catch (Exception e){
+            System.out.println("Exception:"+ e.getMessage());
+        }
+        return allinfo;
+
+    }
 
     public void AddMessage(String myname){
         try {
@@ -78,6 +177,7 @@ public class Methods {
         }catch (Exception e){
 
         }
+        System.out.println(json.toString());
         return json.toString();
     }
 
